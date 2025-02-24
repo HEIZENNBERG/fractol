@@ -6,7 +6,7 @@
 /*   By: onajem <onajem@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:59:35 by onajem            #+#    #+#             */
-/*   Updated: 2025/02/15 13:51:14 by onajem           ###   ########.fr       */
+/*   Updated: 2025/02/24 16:04:24 by onajem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,26 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <mlx.h>
+
+#include <math.h>
 #define WIDTH 800
 #define HEIGTH 800
+
+#define KEY_ESC     53
+#define KEY_LEFT    123
+#define KEY_RIGHT   124
+#define KEY_DOWN    125
+#define KEY_UP      126
+#define KEY_PLUS    69   // '+' on numpad
+#define KEY_MINUS   78   // '-' on numpad
+
+#define MOUSE_LEFT      1
+#define MOUSE_RIGHT     2
+#define MOUSE_MIDDLE    3
+#define SCROLL_UP       4
+#define SCROLL_DOWN     5
+
+
 
 #define BLACK   0x000000  // RGB(0, 0, 0)
 #define WHITE   0xFFFFFF  // RGB(255, 255, 255)
@@ -53,10 +71,22 @@ typedef struct s_fractol
     char *name;
     void *conn;
     void *win;
+    double esc;
+    int iter;
+    double x;
+    double y;
+    double zoom;
     t_img img;
+    double julia_x;
+    double julia_y;
     
 }t_fractol;
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
 
+long	ft_atol(const char *nptr);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
+void render(t_fractol *frac);
+int	key_handler(int key, t_fractol *frac);
+int mouse_handler(int key, int x, int y, t_fractol *frac);
+int close_handler(t_fractol *frac);
 #endif

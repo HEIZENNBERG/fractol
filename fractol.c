@@ -6,12 +6,12 @@
 /*   By: onajem <onajem@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:59:31 by onajem            #+#    #+#             */
-/*   Updated: 2025/02/15 15:29:52 by onajem           ###   ########.fr       */
+/*   Updated: 2025/02/24 16:21:01 by onajem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-// vedio 1h . 09
+// vedio 1h . 30
 
 #include "fractol.h"
 void handle_error(void)
@@ -20,10 +20,21 @@ void handle_error(void)
     exit(1);
 }
 
+void data_init(t_fractol *frac)
+{
+    frac->esc = 4;
+    frac->iter = 42;
+    frac->x = 0.0;
+    frac->y = 0.0;
+    frac->zoom = 1.0;
+}
 
 void event_init(t_fractol *frac)
 {
-	// mlx_hook(frac->win, KeyPress, KeyPressMask, key_handler, frac);
+	mlx_hook(frac->win, 2, 1L << 0, key_handler, frac);
+    mlx_hook(frac->win, 4, 1L << 2, mouse_handler, frac); // ButtonPress
+    mlx_hook(frac->win, 17, 0, close_handler, frac); 
+    // mlx_hook(frac->win, 6, 1L << 6, julia_track, frac);
 	// mlx_hook(frac->win, ButtonPress, ButtonPressMask, mouse_handler, frac);
 	// mlx_hook(frac->win, DestroyNotify, StructureNotifyMask, close_handler, frac);
 	// mlx_hook(frac->win, MotionNotify, PointerMotionMask, julia_track, frac);
@@ -52,8 +63,8 @@ void init(t_fractol *fract)
     }
     fract->img.addr = mlx_get_data_addr(fract->img.img, &fract->img.bits_per_pixel, &fract->img.line_len, &fract->img.endian);
 
-    // event_init()
-    // data_init()
+    event_init(fract);
+    data_init(fract);
 }
 
 double map(double orgin, double new_min, double new_max, double old_min, double old_max)
@@ -88,6 +99,21 @@ void	put_pxl(t_img *data, int x, int y, int color)
 }
 
 
+void shape(t_complex *z, t_complex *c, t_fractol *frac)
+{
+    if (!ft_strncmp(frac->name, "julia", 5))
+    {
+        c->x = frac->julia_x;
+        c->y = frac->julia_y;
+    }
+    else
+    {
+        c->x = z->x;
+        c->y = z->y;        
+    }
+}
+
+
 void process_pixel(int x, int y, t_fractol *frac)
 {
     t_complex z;
@@ -95,23 +121,24 @@ void process_pixel(int x, int y, t_fractol *frac)
     int i;
     int color;
 
-    z.x = 0.0;
-    z.y = 0.0;
-    c.x = map(x, -2, 2, 0, WIDTH);
-    c.y = map(y, 2, -2, 0, WIDTH);
+    z.x = (map(x, -2, 2, 0, WIDTH) * frac->zoom) + frac->x;
+    z.y = (map(y, 2, -2, 0, WIDTH) * frac->zoom) + frac->y;
+
+    shape(&z, &c, frac);
+
     i = 0;
-    while (i < 42)
+    while (i < frac->iter)
     {
         z = sum_c(sqrt_c(z), c);
-        if ((z.x * z.x) + (z.y * z.y) > 4)
+        if ((z.x * z.x) + (z.y * z.y) > frac->esc)
         {
-            color = map(i, BLACK, WHITE, 0, 150);
+            color = map(i, BLACK, WHITE, 0, frac->iter);
             put_pxl(&frac->img, x, y, color);
             return ;
         }
         i++;
     }
-    put_pxl(&frac->img, x, y, MAGENTA);
+    put_pxl(&frac->img, x, y, WHITE);
 }
     
 
@@ -135,6 +162,7 @@ void render(t_fractol *frac)
 }
 
 
+
 int main(int ac, char *av[])
 {
     t_fractol fract;
@@ -142,6 +170,9 @@ int main(int ac, char *av[])
     if (ac == 2 && !ft_strncmp(av[1], "mandlebrot", 11) || ( ac == 4 && !ft_strncmp(av[1], "julia", 5)))
     {
         fract.name = av[1];
+        fract.julia_x = 1; //fix double
+        fract.julia_y = 1; //fix double
+        printf("%f |  %f\n",  fract.julia_x,  fract.julia_y);
         init(&fract);
         
         render(&fract);

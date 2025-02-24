@@ -6,7 +6,7 @@
 /*   By: onajem <onajem@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:59:37 by onajem            #+#    #+#             */
-/*   Updated: 2025/02/14 17:00:40 by onajem           ###   ########.fr       */
+/*   Updated: 2025/02/24 16:02:04 by onajem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,43 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		i++;
 	}
 	return (check);
+}
+
+
+
+static int	is_num(char c)
+{
+	return (c >= '0' && c <= '9');
+}
+
+static int	num_start(const char **str)
+{
+	int	sign;
+
+	sign = 1;
+	while (**str == ' ' || (**str >= 9 && **str <= 13))
+		(*str)++;
+	if (**str == '-' || **str == '+')
+	{
+		if (**str == '-')
+			sign *= -1;
+		(*str)++;
+	}
+	return (sign);
+}
+
+long	ft_atol(const char *nptr)
+{
+	int			sign;
+	long	sum;
+
+	sum = 0;
+	sign = num_start(&nptr);
+	while (is_num(*nptr))
+	{
+		sum = sum * 10 + (*nptr - '0');
+		nptr++;
+	}
+	return (sum * sign);
 }
 
