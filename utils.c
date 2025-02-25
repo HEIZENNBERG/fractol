@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: onajem <onajem@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: onajem <onajem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:59:37 by onajem            #+#    #+#             */
-/*   Updated: 2025/02/24 16:02:04 by onajem           ###   ########.fr       */
+/*   Updated: 2025/02/25 16:33:53 by onajem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+void handle_error(void)
+{
+    write(2, "malloc failled\n", 16);
+    exit(1);
+}
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {

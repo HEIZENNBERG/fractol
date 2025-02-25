@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: onajem <onajem@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: onajem <onajem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:59:35 by onajem            #+#    #+#             */
-/*   Updated: 2025/02/24 16:04:24 by onajem           ###   ########.fr       */
+/*   Updated: 2025/02/25 16:33:56 by onajem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,6 @@ void render(t_fractol *frac);
 int	key_handler(int key, t_fractol *frac);
 int mouse_handler(int key, int x, int y, t_fractol *frac);
 int close_handler(t_fractol *frac);
+
+
 #endif
