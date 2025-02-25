@@ -54,18 +54,29 @@ static int	num_start(const char **str)
 	return (sign);
 }
 
-long	ft_atol(const char *nptr)
+double	ft_atod(const char *nptr)
 {
 	int			sign;
 	long	sum;
+	double 	pow;
+	double	fas;
 
 	sum = 0;
+	pow = 1;
+	fas = 0;
 	sign = num_start(&nptr);
 	while (is_num(*nptr))
 	{
 		sum = sum * 10 + (*nptr - '0');
 		nptr++;
 	}
-	return (sum * sign);
+	if (*nptr == '.')
+		nptr++;
+	while(is_num(*nptr))
+	{
+		pow /= 10;
+		fas = fas + (*nptr - '0') * pow; 
+		nptr++;
+	}
+	return ((sum + fas) * sign);
 }
-

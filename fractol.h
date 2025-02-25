@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <mlx.h>
+// #include <mlx.h>
 
 #include <math.h>
 #define WIDTH 800
