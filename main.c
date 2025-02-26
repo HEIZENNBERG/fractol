@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: onajem <onajem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: onajem <onajem@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:33:13 by onajem            #+#    #+#             */
-/*   Updated: 2025/02/25 16:43:12 by onajem           ###   ########.fr       */
+/*   Updated: 2025/02/26 19:37:37 by onajem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,14 @@ int main(int ac, char *av[])
 {
     t_fractol fract;
     
-    if (ac == 2 && !ft_strncmp(av[1], "mandlebrot", 11) || ( ac == 4 && !ft_strncmp(av[1], "julia", 5)))
+    if (ac == 2 && !ft_strncmp(av[1], "mandlebrot", 11) || (ac == 4 && !ft_strncmp(av[1], "julia", 5)))
     {
         fract.name = av[1];
-        fract.julia_x = ft_atod(av[2]); //fix double
-        fract.julia_y = ft_atod(av[2]);; //fix double
+        if ((ac == 4 && !ft_strncmp(av[1], "julia", 5)))
+        {
+            fract.julia_x = ft_atod(av[2]);
+            fract.julia_y = ft_atod(av[3]);
+        }
 
         init(&fract);
         

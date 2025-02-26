@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: onajem <onajem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: onajem <onajem@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:59:35 by onajem            #+#    #+#             */
-/*   Updated: 2025/02/25 16:33:56 by onajem           ###   ########.fr       */
+/*   Updated: 2025/02/26 19:33:02 by onajem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-// #include <mlx.h>
+#include <mlx.h>
 
 #include <math.h>
 #define WIDTH 800
@@ -83,12 +83,18 @@ typedef struct s_fractol
 }t_fractol;
 
 
-long	ft_atol(const char *nptr);
+void process_pixel(int x, int y, t_fractol *frac);
+void data_init(t_fractol *frac);
+void event_init(t_fractol *frac);
+double map(double orgin, double new_min, double new_max, double old_min, double old_max);
+t_complex sum_c(t_complex z1, t_complex z2);
+t_complex sqrt_c(t_complex z);
+double	ft_atod(const char *nptr);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 void render(t_fractol *frac);
 int	key_handler(int key, t_fractol *frac);
 int mouse_handler(int key, int x, int y, t_fractol *frac);
 int close_handler(t_fractol *frac);
-
+void handle_error(void);
 
 #endif
